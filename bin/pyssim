@@ -1,0 +1,10 @@
+#!/Users/onia/Dev/picmatch/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'pyssim==0.2','console_scripts','pyssim'
+__requires__ = 'pyssim==0.2'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('pyssim==0.2', 'console_scripts', 'pyssim')()
+    )
