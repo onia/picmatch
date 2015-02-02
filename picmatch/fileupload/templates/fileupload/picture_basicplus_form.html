@@ -4,7 +4,7 @@
 <!-- Force latest IE rendering engine or ChromeFrame if installed -->
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 <meta charset="utf-8">
-<title>jQuery File Upload Demo - Basic Plus version</title>
+<title>PICC图像匹配系统</title>
 <meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap styles -->
@@ -23,37 +23,36 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://github.com/sigurdga/django-jquery-file-upload">Django jQuery File Upload</a>
+            <a class="navbar-brand" href="/">PICC图像匹配系统</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="https://github.com/blueimp/jQuery-File-Upload/tags">Demo</a></li>
-                <li><a href="https://github.com/sigurdga/django-jquery-file-upload">Source Code</a></li>
-                <li><a href="https://github.com/blueimp/jQuery-File-Upload/wiki">Documentation</a></li>
+                <li class="active"><a href="#">首页</a></li>
+                <li><a href="/admin">管理图像库</a></li>
+                <li><a href="http://64.161.32.180/">返回市公司主页</a></li>
             </ul>
         </div>
     </div>
 </div>
 <div class="container">
-    <h1>Django jQuery File Upload Demo</h1>
-    <h2 class="lead">Basic Plus version</h2>
+    <!-- <h1>Django jQuery File Upload Demo</h1>
+    <h2 class="lead">Basic Plus version</h2> -->
     <ul class="nav nav-tabs">
-        <li><a href="/upload/basic">Basic</a></li>
-        <li class="active"><a href="/upload/basic/plus">Basic Plus</a></li>
-        <li><a href="/upload/new">Basic Plus UI</a></li>
-        <li><a href="/upload/angular">AngularJS</a></li>
-        <li><a href="/upload/jquery-ui">jQuery UI</a></li>
+        <!-- <li><a href="/upload/basic">Basic</a></li> -->
+        <li class="active"><a href="/upload/basic/plus">SSIM算法匹配</a></li>
+        <li><a href="/upload/new">PSNR算法匹配</a></li>
+        <!-- <li><a href="/upload/angular">AngularJS</a></li>
+        <li><a href="/upload/jquery-ui">jQuery UI</a></li> -->
     </ul>
     <br>
     <blockquote>
-        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery.<br>
-        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.</p>
+        <p>结构相似性指标（SSIM）是一种用以衡量两张数位影像相似程度的指标。当两张影像其中一张为无失真影像，另一张为失真后的影像，二者的结构相似性可以看成是失真影像的影像品质衡量指标。相较于传统所使用的影像品质衡量指标，像是峰值信噪比（PSNR），结构相似性在影像品质的衡量上更能符合人眼对影像品质的判断。</p>
     </blockquote>
     <br>
     <!-- The fileinput-button span is used to style the file input field as button -->
     <span class="btn btn-success fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
-        <span>Add files...</span>
+        <span>添加文件...</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" multiple>
     </span>
@@ -68,15 +67,13 @@
     <br>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Demo Notes</h3>
+            <h3 class="panel-title">注意</h3>
         </div>
         <div class="panel-body">
             <ul>
-                <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-                <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
-                <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki">documentation</a> for more information.</li>
-                <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> CSS framework and Icons from <a href="http://glyphicons.com/">Glyphicons</a>.</li>
+                <li>文件上传大小限制为 <strong>5 MB</strong> 。</li>
+                <li>仅支持上传 (<strong>JPG, GIF, PNG</strong>) 格式的图片文件。</li>
+                <li>推荐使用 Chrome、Firefox 或 Microsoft Internet Explorer 10.0+ 浏览器，支持直接“<strong>拖拽</strong>”。</li>
             </ul>
         </div>
     </div>
