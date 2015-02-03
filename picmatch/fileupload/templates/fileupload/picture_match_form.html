@@ -48,19 +48,34 @@
     <blockquote>
         <p>结构相似性指标（SSIM）是一种用以衡量两张数位影像相似程度的指标。当两张影像其中一张为无失真影像，另一张为失真后的影像，二者的结构相似性可以看成是失真影像的影像品质衡量指标。相较于传统所使用的影像品质衡量指标，像是峰值信噪比（PSNR），结构相似性在影像品质的衡量上更能符合人眼对影像品质的判断。</p>
     </blockquote>
-    <br>
     <!-- The container for the uploaded files -->
-    <div id="files" class="files"></div>
-    <br>
+    <div class="panel-body">
+            <ul>
+                <li style="display: inline-block;margin-right: 30px;">
+                    <img src='/uploads/{{ pic_name }}' width="100" height="100"/>
+                    <br><span>{{ pic_name }}</span>
+                </li>
+            </ul>
+    </div>
+    <!-- The global progress bar -->
+<!--     <div id="progress" class="progress">
+        <div class="progress-bar progress-bar-success"></div>
+        <div style="display: inline-block;margin-right: 30px;">
+    </div> -->
+    <!-- The container for the match files -->
+    <br><br>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">注意</h3>
+            <h3 class="panel-title">最相似的图片：</h3>
         </div>
         <div class="panel-body">
             <ul>
-                <li>文件上传大小限制为 <strong>5 MB</strong> 。</li>
-                <li>仅支持上传 (<strong>JPG, GIF, PNG</strong>) 格式的图片文件。</li>
-                <li>推荐使用 Chrome、Firefox 或 Microsoft Internet Explorer 10.0+ 浏览器，支持直接“<strong>拖拽</strong>”。</li>
+            {% for pic in pic_list %}
+                <li style="display: inline-block;margin-right: 30px;">
+                    <a href='/pictures/{{ pic.name }}'><img src='/pictures/{{ pic.name }}' width="100" height="100"/></a>
+                    <br><span>{{ pic.ssim }}</span>
+                </li>
+            {% endfor %}
             </ul>
         </div>
     </div>

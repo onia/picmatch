@@ -2,12 +2,12 @@
 import json
 
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.views.generic import CreateView, DeleteView, ListView
 from .models import Picture
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
 from .picmatcher import picmatcher
-
 
 class PictureCreateView(CreateView):
     model = Picture
@@ -15,16 +15,9 @@ class PictureCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         files = [serialize(self.object)]
-        print(files)
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
-
-        match_res = list()
-        for fl in files:
-            match_res = picmatcher(fl['name'])
-
-        #print(match_res)
         return response
 
     def form_invalid(self, form):
@@ -68,12 +61,13 @@ class PictureListView(ListView):
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 
-class PictureMatchView(ListView):
-    model = Picture
-
-    def match_list(request, template_name='picture_match_form.html'):
-        imgs = Picture.objects.all()
-        data = {}
-        data['object_list'] = imgs
-        print(data)
-        return render(request, template_name, data)
+def PictureMatchView(request, pic_name):
+    pic_list = list()
+    match_res = picmatcher("uploads/"+pic_name)
+    for match in match_res:
+        tmp_dict=dict()
+        tmp_dict['name']= match[0].replace('pictures/','')
+        tmp_dict['ssim']= "%.3f" % match[1]
+        pic_list.append(tmp_dict)
+    context = {'pic_name': pic_name, 'pic_list': pic_list}
+    return render(request, 'fileupload/picture_match_form.html', context)

@@ -16,6 +16,6 @@ urlpatterns = patterns('',
     #url(r'^jquery-ui/$', jQueryVersionCreateView.as_view(), name='upload-jquery'),
     url(r'^delete/(?P<pk>\d+)$', PictureDeleteView.as_view(), name='upload-delete'),
     url(r'^view/$', PictureListView.as_view(), name='upload-view'),
-    url(r'^basic/plus/uploads/(?P<pk>\d+)$', PictureMatchView.as_view(), name='upload-match-view'),
-    url(r'^new/uploads/(?P<pk>\d+)$', PictureMatchView.as_view(), name='upload-match-view'),
+    url(r'^basic/plus/uploads/(?P<pic_name>.*)$', PictureMatchView),
+    url(r'^new/uploads/(?P<pic_name>.*)/$', PictureMatchView),
 )
