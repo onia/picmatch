@@ -49,22 +49,8 @@
         <p>结构相似性指标（SSIM）是一种用以衡量两张数位影像相似程度的指标。当两张影像其中一张为无失真影像，另一张为失真后的影像，二者的结构相似性可以看成是失真影像的影像品质衡量指标。相较于传统所使用的影像品质衡量指标，像是峰值信噪比（PSNR），结构相似性在影像品质的衡量上更能符合人眼对影像品质的判断。</p>
     </blockquote>
     <br>
-    <!-- The fileinput-button span is used to style the file input field as button -->
-    <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>添加文件...</span>
-        <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="file" multiple>
-    </span>
-    <br>
-    <br>
     <!-- The container for the uploaded files -->
     <div id="files" class="files"></div>
-    <br>
-    <!-- The global progress bar -->
-    <div id="progress" class="progress">
-        <div class="progress-bar progress-bar-success"></div>
-    </div>
     <br>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -118,13 +104,13 @@ $(function () {
         uploadButton = $('<button/>')
             .addClass('btn btn-primary')
             .prop('disabled', true)
-            .text('处理中...')
+            .text('Processing...')
             .on('click', function () {
                 var $this = $(this),
                     data = $this.data();
                 $this
                     .off('click')
-                    .text('取消')
+                    .text('Abort')
                     .on('click', function () {
                         $this.remove();
                         data.abort();
@@ -154,7 +140,7 @@ $(function () {
         previewMaxHeight: 100,
         previewCrop: true
     }).on('fileuploadadd', function (e, data) {
-        data.context = $('<div style="display: inline-block;margin-right: 30px;"/>').appendTo('#files');
+        data.context = $('<div/>').appendTo('#files');
         $.each(data.files, function (index, file) {
             var node = $('<p/>')
                     .append($('<span/>').text(file.name));
@@ -181,7 +167,7 @@ $(function () {
         }
         if (index + 1 === data.files.length) {
             data.context.find('button')
-                .text('上传')
+                .text('Upload')
                 .prop('disabled', !!data.files.error);
         }
     }).on('fileuploadprogressall', function (e, data) {

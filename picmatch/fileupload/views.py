@@ -6,6 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView
 from .models import Picture
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
+from .picmatcher import picmatcher
 
 
 class PictureCreateView(CreateView):
@@ -14,9 +15,16 @@ class PictureCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         files = [serialize(self.object)]
+        print(files)
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
+
+        match_res = list()
+        for fl in files:
+            match_res = picmatcher(fl['name'])
+
+        #print(match_res)
         return response
 
     def form_invalid(self, form):
@@ -59,3 +67,13 @@ class PictureListView(ListView):
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
+
+class PictureMatchView(ListView):
+    model = Picture
+
+    def match_list(request, template_name='picture_match_form.html'):
+        imgs = Picture.objects.all()
+        data = {}
+        data['object_list'] = imgs
+        print(data)
+        return render(request, template_name, data)
