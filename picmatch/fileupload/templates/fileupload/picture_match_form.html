@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fancybox.css" type="text/css" media="screen">
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
@@ -52,7 +53,7 @@
     <div class="panel-body">
             <ul>
                 <li style="display: inline-block;margin-right: 30px;">
-                    <img src='/uploads/{{ pic_name }}' width="100" height="100"/>
+                    <a class="fancybox" target="_blank" href='/uploads/{{ pic_name }}'><img src='/uploads/{{ pic_name }}' width="100" height="100" alt=""/></a>
                     <br><span>{{ pic_name }}</span>
                 </li>
             </ul>
@@ -72,7 +73,7 @@
             <ul>
             {% for pic in pic_list %}
                 <li style="display: inline-block;margin-right: 30px;">
-                    <a href='/pictures/{{ pic.name }}'><img src='/pictures/{{ pic.name }}' width="100" height="100"/></a>
+                    <a class="fancybox" target="_blank" href='/pictures/{{ pic.name }}'><img src='/pictures/{{ pic.name }}' width="100" height="100" alt="" title="{{ pic.name }}"/></a>
                     <br><span>{{ pic.ssim }}</span>
                 </li>
             {% endfor %}
@@ -80,8 +81,9 @@
         </div>
     </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="{{ STATIC_URL }}js/vendor/jquery-1.10.2.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ --><!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="{{ STATIC_URL }}js/vendor/jquery.ui.widget.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 <script src="{{ STATIC_URL }}js/load-image.min.js"></script>
@@ -104,6 +106,7 @@
 <!-- The File Upload validation plugin -->
 <script src="{{ STATIC_URL }}js/jquery.fileupload-validate.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.fancybox.pack.js"></script>
 <script>
 /*jslint unparam: true, regexp: true */
 /*global window, $ */
@@ -113,6 +116,7 @@ function csrfSafeMethod(method) {
 }
 $(function () {
     'use strict';
+    $('.fancybox').fancybox();
     var csrftoken = $.cookie('csrftoken');
     // Change this to the location of your server-side upload handler:
     var url = '/upload/basic/plus/',

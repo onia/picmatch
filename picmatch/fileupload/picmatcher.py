@@ -25,6 +25,8 @@ def picmatcher(pic_name):
         gaussian_kernel_width, gaussian_kernel_sigma)
 
     for comparison_image in comparison_images:
+        if not re.search('(jpg|jpeg|png|gif)$',comparison_image.lower()):
+            continue
         ssim_value = SSIM(pic_name, gaussian_kernel_1d).ssim_value(
             comparison_image)
         match_dict[comparison_image] = ssim_value

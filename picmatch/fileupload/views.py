@@ -66,8 +66,9 @@ def PictureMatchView(request, pic_name):
     match_res = picmatcher("uploads/"+pic_name)
     for match in match_res:
         tmp_dict=dict()
-        tmp_dict['name']= match[0].replace('pictures/','')
+        tmp_dict['name']= match[0].replace('pictures/','').replace('pictures\\','')
         tmp_dict['ssim']= "%.3f" % match[1]
         pic_list.append(tmp_dict)
     context = {'pic_name': pic_name, 'pic_list': pic_list}
+    #print(context)
     return render(request, 'fileupload/picture_match_form.html', context)
