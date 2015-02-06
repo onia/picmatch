@@ -1,10 +1,20 @@
 # encoding: utf-8
 import os
-import glob
 import re
+import xmlrpc.client
 
-from ssim.utils import get_gaussian_kernel
-from ssim.ssimlib import SSIM
+from .models import Picture
+
+ID_SERVER = xmlrpc.client.ServerProxy("http://64.161.32.153:31128/RPC")
+PICTURES_DIR = "C:/Dev/picmatch/pictures"
+
+# print(ID_SERVER)
+
+# print(ID_SERVER.getDbImgCount(1))
+# print(ID_SERVER.addImg(1, 999999, os.path.join(PICTURES_DIR,"1.jpg")))
+# print(ID_SERVER.addKeywordImg(1,1,3))
+# print(ID_SERVER.getKeywordsImg(1,1))
+# print(ID_SERVER.queryImgID(1,6, 3))
 
 def picmatcher(pic_name):
     """pic_name -- Limit a text to 20 chars length, if necessary strips the
@@ -13,27 +23,18 @@ def picmatcher(pic_name):
     Compares an image with a list of images using the SSIM metric.
 
     """
-    match_dict = dict()
     match_res = list()
-
-    PICTURE_DB = 'pictures/*'
-    comparison_images = glob.glob(PICTURE_DB)
-
-    gaussian_kernel_sigma = 1.5
-    gaussian_kernel_width = 11
-    gaussian_kernel_1d = get_gaussian_kernel(
-        gaussian_kernel_width, gaussian_kernel_sigma)
-
-    for comparison_image in comparison_images:
-        if not re.search('(jpg|jpeg|png|gif)$',comparison_image.lower()):
-            continue
-        ssim_value = SSIM(pic_name, gaussian_kernel_1d).ssim_value(
-            comparison_image)
-        match_dict[comparison_image] = ssim_value
-
-    match_res = sorted(match_dict.items(), key=lambda d: d[1], reverse=True)[:10]
-    
+    match_name ='pictures/'+pic_name
+    p = Picture.objects.filter(file=match_name)
+    print('Saved image:', pic_name)
+    #print(Picture.objects.all()[70].slug,Picture.objects.all()[70].file)
+    print(p)
+    if p:
+        add_success = ID_SERVER.addImg(1, p[0].id, os.path.join(PICTURES_DIR, p[0].slug))
+        query_res = ID_SERVER.queryImgID(1, p[0].id, 20)
+        for img in query_res[1:]:
+            tmp_dict=dict()
+            tmp_dict['name'] = Picture.objects.filter(id=img[0])[0].slug
+            tmp_dict['svalue']  = "%.2f" % img[1]+"%"
+            match_res.append(tmp_dict)
     return match_res
-
-# if __name__ == '__main__':
-#     picmatcher('pictures/申请表第1页.jpg')
