@@ -32,7 +32,7 @@ def picmatcherSSIM(pic_name):
         ssim_value = image_similarity_vectors_via_numpy(pic_name,comparison_image)
         match_dict[comparison_image] = ssim_value
 
-    match_res = sorted(match_dict.items(), key=lambda d: d[1], reverse=True)[:10]
+    match_res = sorted(match_dict.items(), key=lambda d: d[1], reverse=True)[:20]
     
     return match_res
 
