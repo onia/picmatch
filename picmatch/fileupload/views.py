@@ -8,6 +8,7 @@ from .models import Picture
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
 from .picmatcher import picmatcher
+from .picmatcher_x import picmatcherSSIM
 
 class PictureCreateView(CreateView):
     model = Picture
@@ -64,6 +65,18 @@ class PictureListView(ListView):
 def PictureMatchView(request, pic_name):
     pic_list = list()
     pic_list = picmatcher(pic_name)
+    context = {'pic_name': pic_name, 'pic_list': pic_list}
+    #print(context)
+    return render(request, 'fileupload/picture_match_form.html', context)
+
+def PictureMatchViewSSIM(request, pic_name):
+    pic_list = list()
+    match_res = picmatcherSSIM("pictures/"+pic_name)
+    for match in match_res:
+        tmp_dict=dict()
+        tmp_dict['name']= match[0].replace('pictures/','').replace('pictures\\','')
+        tmp_dict['svalue']= "%.2f" % match[1]
+        pic_list.append(tmp_dict)
     context = {'pic_name': pic_name, 'pic_list': pic_list}
     #print(context)
     return render(request, 'fileupload/picture_match_form.html', context)
