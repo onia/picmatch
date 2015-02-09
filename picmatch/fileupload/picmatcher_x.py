@@ -19,8 +19,8 @@ def picmatcherSSIM(pic_name):
     PICTURE_DB = 'pictures/*'
     comparison_images = glob.glob(PICTURE_DB)
 
-    gaussian_kernel_sigma = 7
-    gaussian_kernel_width = 45
+    gaussian_kernel_sigma = 1.5
+    gaussian_kernel_width = 11
     gaussian_kernel_1d = get_gaussian_kernel(
         gaussian_kernel_width, gaussian_kernel_sigma)
 
@@ -32,7 +32,7 @@ def picmatcherSSIM(pic_name):
         ssim_value = image_similarity_vectors_via_numpy(pic_name,comparison_image)
         match_dict[comparison_image] = ssim_value
 
-    match_res = sorted(match_dict.items(), key=lambda d: d[1], reverse=True)[:10]
+    match_res = sorted(match_dict.items(), key=lambda d: d[1], reverse=True)[:20]
     
     return match_res
 
